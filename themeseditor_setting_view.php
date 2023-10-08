@@ -6,22 +6,31 @@
     $("#menu_mg").addClass('active');
     setTimeout(hideActived, 2600);
 </script>
-<link rel="stylesheet" href="../content/plugins/themeseditor-master/CodeMirror/codemirror.css">
-<link rel="stylesheet" href="../content/plugins/themeseditor-master/CodeMirror/theme/<?php echo CODEMIRROR_THEME; ?>.css" id="mirrTheme">
-<script src="../content/plugins/themeseditor-master/CodeMirror/codemirror.js"></script>
-<script src="../content/plugins/themeseditor-master/CodeMirror/util.js"></script>
+<link rel="stylesheet" href="../content/plugins/themeseditor/CodeMirror/codemirror.css">
+<link rel="stylesheet" href="../content/plugins/themeseditor/CodeMirror/theme/<?php echo CODEMIRROR_THEME; ?>.css" id="mirrTheme">
+<script src="../content/plugins/themeseditor/CodeMirror/codemirror.js"></script>
+<script src="../content/plugins/themeseditor/CodeMirror/util.js"></script>
 
-<script src="../content/plugins/themeseditor-master/CodeMirror/mode.js"></script>
+<script src="../content/plugins/themeseditor/CodeMirror/mode.js"></script>
 <?php if (isset($_GET['setting'])): ?>
     <div class="actived alert alert-success alert-dismissable">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
         插件设置完成
     </div>
 <?php endif; ?>
-<div class="form-group text-center saveStatus" style="color:red">
+<div class="d-sm-flex align-items-center mb-4">
+    <h1 class="h3 mb-0 mr-5 text-gray-800">主题编辑</h1>
+    <span class="saveStatus text-success"></span>
 </div>
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-9">
+        <div class="panel panel-default card-view">
+            <div class="panel-body">
+                <textarea name="newcontent" id="newcontent" tabindex="1" style="display:none" class="form-control"><?php echo $themeseditor_theme_content; ?></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
         <div class="panel panel-default card-view">
             <div class="panel-body">
                 <div class="form-group">
@@ -52,41 +61,24 @@
                         ?>
                     </select>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default card-view">
-            <div class="panel-body">
-<textarea name="newcontent" id="newcontent" tabindex="1" style="display:none" class="form-control"><?php echo $themeseditor_theme_content; ?>
-</textarea>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default card-view">
-            <div class="panel-body">
-                <input type="hidden" name="fileP" value="<?php echo $themeseditor_currentFile ?>">
-                <input type="button" class="btn  btn-success" value="更新文件" onClick="saveFileContent()"/>
-                <select onchange="selectTheme()" class="form-control" id="select" style="width:130px;float: right;">
-                    <?php
-                    foreach (explode(",", THEMESEDITOR_EDITOR_THEMES) as $name) {
-                        if ($name == CODEMIRROR_THEME) {
-                            echo "<option selected='selected'>$name</option>";
-                        } else {
-                            echo "<option>$name</option>";
+                <div class="form-group">
+                    <label class="control-label mb-10">代码显示风格</label>
+                    <select onchange="selectTheme()" class="form-control" id="select">
+                        <?php
+                        foreach (explode(",", THEMESEDITOR_EDITOR_THEMES) as $name) {
+                            if ($name == CODEMIRROR_THEME) {
+                                echo "<option selected='selected'>$name</option>";
+                            } else {
+                                echo "<option>$name</option>";
+                            }
                         }
-                    }
-                    ?>
-                </select>
+                        ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="hidden" name="fileP" value="<?php echo $themeseditor_currentFile ?>">
+                    <input type="button" class="btn  btn-success my-2" value="保存文件" onClick="saveFileContent()"/>
+                </div>
             </div>
         </div>
     </div>
@@ -167,7 +159,7 @@
         $(".saveStatus").text("主题加载ing....").fadeIn();
         var theme = $("#select").val();
         $.ajax({
-            url: "../content/plugins/themeseditor-master/CodeMirror/theme/" + theme + ".css",
+            url: "../content/plugins/themeseditor/CodeMirror/theme/" + theme + ".css",
             dataType: "text",
             success: function (data) {
                 style.html(data);
@@ -175,15 +167,15 @@
                 $(".saveStatus").text("主题加载成功").delay(2000).fadeOut();
             }
         });
-        $.post("../content/plugins/themeseditor-master/themeseditor-master_controler.php", {action: "saveEditorThemes", name: theme});
+        $.post("../content/plugins/themeseditor/themeseditor_controler.php", {action: "saveEditorThemes", name: theme});
     }
 
     function changeSelectTheme(target) {
-        window.location.replace('./plugin.php?plugin=themeseditor-master&themeName=' + $(target).val());
+        window.location.replace('./plugin.php?plugin=themeseditor&themeName=' + $(target).val());
     }
 
     function changeSelectThemeFile(target) {
-        window.location.replace('./plugin.php?plugin=themeseditor-master&themeName=' + $("#themeName").val() + "&themeFileName=" + $(target).val());
+        window.location.replace('./plugin.php?plugin=themeseditor&themeName=' + $("#themeName").val() + "&themeFileName=" + $(target).val());
     }
 
     var saving = false;
@@ -191,12 +183,12 @@
     function saveFileContent() {
         if (!saving) {
             saving = true;
-            $(".saveStatus").text("更新ing....").fadeIn();
-            $.post("../content/plugins/themeseditor-master/themeseditor-master_controler.php", {action: "save", themeName: $("#themeName").val(), fileName: $("#themeNameFile").val(), content: CodeMirrorEditor.getValue()}, function (rsp) {
+            $(".saveStatus").text("保存中....").fadeIn();
+            $.post("../content/plugins/themeseditor/themeseditor_controler.php", {action: "save", themeName: $("#themeName").val(), fileName: $("#themeNameFile").val(), content: CodeMirrorEditor.getValue()}, function (rsp) {
                 if (rsp.status) {
-                    $(".saveStatus").text("更新成功！").delay(2000).fadeOut();
+                    $(".saveStatus").text("文件保存成功").delay(2000).fadeOut();
                 } else {
-                    $(".saveStatus").text("更新失败！").delay(2000).fadeOut();
+                    $(".saveStatus").text("文件保存失败！").delay(2000).fadeOut();
                 }
                 saving = false;
             }, "JSON").error(function () {

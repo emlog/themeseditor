@@ -7,15 +7,17 @@
   Author: emlog
   Author URL:  https://www.emlog.net/author/index/577
  */
+
 !defined('EMLOG_ROOT') && exit('access deined!');
 
-function themeseditor() {//写入插件导航
+//写入插件导航
+function themeseditor() {
     $pluginName = isset($_GET['plugin']) ? addslashes(trim($_GET['plugin'])) : '';
-    $isActive = $pluginName == 'themeseditor-master';
+    $isActive = $pluginName == 'themeseditor';
     if ($isActive) {
         echo '<script>$("#menu_ext").addClass("show");</script>';
     }
-    echo '<a class="collapse-item ' . ($isActive ? 'active' : '') . '" href="./plugin.php?plugin=themeseditor-master">主题编辑</a>';
+    echo '<a class="collapse-item ' . ($isActive ? 'active' : '') . '" href="./plugin.php?plugin=themeseditor">主题编辑</a>';
 }
 
 addAction('adm_menu_ext', 'themeseditor');

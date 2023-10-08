@@ -1,7 +1,8 @@
 <?php
 !defined('EMLOG_ROOT') && exit('access deined!');
-include(EMLOG_ROOT . '/content/plugins/themeseditor-master/themeseditor-master_config.php');
+include(EMLOG_ROOT . '/content/plugins/themeseditor/themeseditor_config.php');
 define('THEMESEDITOR_THEME_PATH', EMLOG_ROOT . '/content/templates/');
+
 /**
  *获得所有主题
  **/
@@ -57,8 +58,8 @@ function saveThemFileContent($themeName, $fileName, $content) {
 }
 
 function themeseditor_setting_config($themeName, $fileName, $codemirrorTheme) {
-    $fso = fopen(EMLOG_ROOT . '/content/plugins/themeseditor-master/themeseditor-master_config.php', 'r');
-    $config = fread($fso, filesize(EMLOG_ROOT . '/content/plugins/themeseditor-master/themeseditor-master_config.php'));
+    $fso = fopen(EMLOG_ROOT . '/content/plugins/themeseditor/themeseditor_config.php', 'r');
+    $config = fread($fso, filesize(EMLOG_ROOT . '/content/plugins/themeseditor/themeseditor_config.php'));
     fclose($fso);
 
     if (!empty($codemirrorTheme)) {
@@ -69,7 +70,7 @@ function themeseditor_setting_config($themeName, $fileName, $codemirrorTheme) {
         $replace = array("define('THEMESEDITOR_CTHEME','" . $themeName . "')", "define('THEMESEDITOR_CFILE','" . $fileName . "')",);
     }
     $new_config = preg_replace($pattern, $replace, $config);
-    $fso = fopen(EMLOG_ROOT . '/content/plugins/themeseditor-master/themeseditor-master_config.php', 'w');
+    $fso = fopen(EMLOG_ROOT . '/content/plugins/themeseditor/themeseditor_config.php', 'w');
     fwrite($fso, $new_config);
     fclose($fso);
 }
