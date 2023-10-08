@@ -79,17 +79,10 @@
                     <input type="hidden" name="fileP" value="<?php echo $themeseditor_currentFile ?>">
                     <input type="button" class="btn  btn-success my-2" value="保存文件" onClick="saveFileContent()"/>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default card-view">
-            <div class="panel-body">
-                快捷键<br/>
-                <b>保存更新</b>(Ctrl-S / Cmd-S) <br/><b>全屏编辑</b>(F11) <br/><b>退出全屏</b>(Esc) <br/><b>搜索</b>(Ctrl-F / Cmd-F) <br/><b>查找下一个</b>(Ctrl-G / Cmd-G) <br/><b>查找上一个</b>(Shift-Ctrl-G / Shift-Cmd-G) <br/><b>替换</b>(Shift-Ctrl-F / Cmd-Option-F)<br/><b>替换所有</b>(Shift-Ctrl-R / Shift-Cmd-Option-F)
+                <div class="form-group">
+                    快捷键<br/>
+                    <b>保存更新</b>(Ctrl-S / Cmd-S) <br/><b>全屏编辑</b>(F11) <br/><b>退出全屏</b>(Esc) <br/><b>搜索</b>(Ctrl-F / Cmd-F) <br/><b>查找下一个</b>(Ctrl-G / Cmd-G) <br/><b>查找上一个</b>(Shift-Ctrl-G / Shift-Cmd-G) <br/><b>替换</b>(Shift-Ctrl-F / Cmd-Option-F)<br/><b>替换所有</b>(Shift-Ctrl-R / Shift-Cmd-Option-F)
+                </div>
             </div>
         </div>
     </div>
@@ -152,7 +145,7 @@
             "Ctrl-S": saveFileContent
         }
     });
-    CodeMirrorEditor.setSize(null, 500);
+    CodeMirrorEditor.setSize(null, 680);
     var style = $("<style></style>").appendTo("head");
 
     function selectTheme() {

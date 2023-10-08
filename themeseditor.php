@@ -1,7 +1,7 @@
 <?php
 /*
   Plugin Name: 主题编辑插件
-  Version: 0.1
+  Version: 0.1.1
   Plugin URL: https://www.emlog.net/plugin/detail/474
   Description: 可以在线直接编辑你的主题文件。
   Author: emlog
